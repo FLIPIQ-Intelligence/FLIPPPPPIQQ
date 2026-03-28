@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flip IQ — Stop Hunting. Start Flipping.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --card: #161616;
+  --border: #252525;
+  --green: #00e87a;
+  --green-dim: #00b85f;
+  --white: #f0f0f0;
+  --muted: #888;
+  --gold: #f5c842;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 5vw;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  color: var(--green);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+.nav-cta {
+  background: var(--green);
+  color: var(--black) !important;
+  padding: 0.5rem 1.4rem;
+  border-radius: 4px;
+  font-weight: 600 !important;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10rem 5vw 6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(0,232,122,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--green);
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  max-width: 900px;
+}
+
+.hero h1 span {
+  color: var(--green);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 520px;
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--green);
+  color: var(--black);
+  padding: 1rem 2.4rem;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 rgba(0,232,122,0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,232,122,0.25);
+}
+
+.btn-secondary {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-secondary:hover { color: var(--white); border-color: var(--white); }
+
+.hero-stats {
+  margin-top: 5rem;
+  display: flex;
+  gap: 4rem;
+  border-top: 1px solid var(--border);
+  padding-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  color: var(--white);
+  line-height: 1;
+}
+.stat-num span { color: var(--green); }
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 0.3rem;
+}
+
+/* SECTION COMMONS */
+section { padding: 7rem 5vw; }
+
+.section-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+/* PROBLEM */
+.problem { background: var(--dark); }
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+
+.problem-items { display: flex; flex-direction: column; gap: 1.8rem; }
+
+.problem-item {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  padding: 1.4rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+.problem-item:hover { border-color: rgba(0,232,122,0.3); }
+
+.problem-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(255,60,60,0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.problem-text h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.3rem;
+  color: var(--white);
+}
+.problem-text p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+.problem-callout {
+  background: linear-gradient(135deg, rgba(0,232,122,0.05), rgba(0,232,122,0.02));
+  border: 1px solid rgba(0,232,122,0.2);
+  border-radius: 12px;
+  padding: 2.5rem;
+  position: sticky;
+  top: 7rem;
+}
+
+.problem-callout p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+.problem-callout p em { color: var(--green); font-style: normal; }
+
+/* HOW IT WORKS */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.step:hover { transform: translateY(-4px); border-color: rgba(0,232,122,0.3); }
+
+.step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  line-height: 1;
+  color: rgba(0,232,122,0.12);
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.step-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(0,232,122,0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.step h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+.step p { font-size: 0.875rem; color: var(--muted); line-height: 1.75; }
+
+/* CATEGORIES */
+.categories { background: var(--dark); }
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+}
+
+.category-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.category-card:hover { border-color: rgba(0,232,122,0.4); transform: translateY(-3px); }
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.cat-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(0,232,122,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.cat-header h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.cat-badge {
+  margin-left: auto;
+  background: rgba(245,200,66,0.12);
+  color: var(--gold);
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(245,200,66,0.2);
+}
+
+.category-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+
+/* PRICING */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-top: 3.5rem;
+  align-items: start;
+}
+
+.plan {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  transition: transform 0.2s;
+}
+.plan:hover { transform: translateY(-4px); }
+
+.plan.featured {
+  border-color: var(--green);
+  background: linear-gradient(160deg, rgba(0,232,122,0.06), var(--card));
+  position: relative;
+}
+
+.featured-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: var(--black);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.plan-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.plan-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.2rem;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+  color: var(--white);
+}
+.plan-price span { font-size: 1.4rem; }
+.plan-price sub { font-size: 1rem; font-family: 'Barlow', sans-serif; color: var(--muted); }
+
+.plan-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 1.8rem;
+  padding-bottom: 1.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+.plan-features li {
+  font-size: 0.82rem;
+  color: var(--muted);
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+.plan-features li::before {
+  content: '✓';
+  color: var(--green);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.plan-btn {
+  display: block;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.plan-btn:hover { border-color: var(--white); color: var(--white); }
+.plan.featured .plan-btn {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--black);
+}
+.plan.featured .plan-btn:hover { background: var(--green-dim); border-color: var(--green-dim); }
+
+/* FAQ */
+.faq { background: var(--dark); }
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 3.5rem;
+}
+
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.6rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.faq-item:hover { border-color: rgba(0,232,122,0.3); }
+.faq-item h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.7rem;
+  color: var(--white);
+}
+.faq-item p { font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+
+/* CTA SECTION */
+.cta-section {
+  text-align: center;
+  padding: 8rem 5vw;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(0,232,122,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-section .section-title { font-size: clamp(3rem, 6vw, 6rem); }
+.cta-section p { font-size: 1rem; color: var(--muted); max-width: 480px; margin: 1.5rem auto 2.5rem; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--dark);
+}
+
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--green);
+  letter-spacing: 2px;
+}
+
+footer p { font-size: 0.75rem; color: var(--muted); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow { animation: fadeUp 0.6s ease both; }
+.hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+.hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+.hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+.hero-stats { animation: fadeUp 0.6s 0.4s ease both; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .problem-grid, .steps, .category-grid, .pricing-grid, .faq-grid {
+    grid-template-columns: 1fr;
+  }
+  .steps { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .problem-callout { position: static; }
+  .pricing-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 500px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Flip IQ</div>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://forms.gle/VYZYKNhTktoC9G747" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">AI-Powered Deal Scanner</p>
+  <h1>Stop Hunting.<span>Start Flipping.</span></h1>
+  <p class="hero-sub">Every morning, Flip IQ scans thousands of listings and sends you only the deals worth your time — cars, sneakers, and trading cards priced below market value.</p>
+  <div class="hero-actions">
+    <a href="https://forms.gle/VYZYKNhTktoC9G747" class="btn-primary">Start Finding Deals →</a>
+    <a href="#how" class="btn-secondary">See how it works</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">7<span>AM</span></div>
+      <div class="stat-label">Daily Delivery Time</div>
+    </div>
+    <div>
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Deal Categories</div>
+    </div>
+    <div>
+      <div class="stat-num">$500<span>+</span></div>
+      <div class="stat-label">Min. Car Deal Savings</div>
+    </div>
+    <div>
+      <div class="stat-num">10<span>min</span></div>
+      <div class="stat-label">Time to Spot a Deal</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-tag">The Problem</div>
+  <h2 class="section-title">You're Leaving Money on<br>the Table Every Day</h2>
+  <div class="problem-grid">
+    <div class="problem-items">
+      <div class="problem-item">
+        <div class="problem-icon">⏱</div>
+        <div class="problem-text">
+          <h4>You Can't Check Every Listing</h4>
+          <p>By the time you spot a deal, someone else already bought it. Speed is the game — you're playing it too slow.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">📊</div>
+        <div class="problem-text">
+          <h4>You Don't Know Real Market Value</h4>
+          <p>KBB, StockX, Whatnot — you'd have to check 10 sources to feel confident. Most people skip it and pass on good deals.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">🔍</div>
+        <div class="problem-text">
+          <h4>The Best Flippers Have a System</h4>
+          <p>They're not browsing. They're running searches you don't even know exist. They have tools. You don't — yet.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">🕐</div>
+        <div class="problem-text">
+          <h4>Time is the Real Cost</h4>
+          <p>You're spending 2 hours a day hunting instead of 10 minutes buying. That's not a hustle — that's inefficiency.</p>
+        </div>
+      </div>
+    </div>
+    <div class="problem-callout">
+      <p>The flippers making serious money aren't <em>smarter</em> than you.</p>
+      <p>They have <em>better tools.</em></p>
+      <a href="https://forms.gle/VYZYKNhTktoC9G747" class="btn-primary">Get the Same Edge →</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-tag">How It Works</div>
+  <h2 class="section-title">3 Simple Steps to Your<br>Next Flip</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">📬</div>
+      <h3>You Get the Alert</h3>
+      <p>Every morning, Flip IQ delivers a curated list of deals directly to your phone. No app needed. No logging in. Just a clean report with the best opportunities of the day.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">⚡</div>
+      <h3>You Evaluate in 60 Seconds</h3>
+      <p>Each deal shows you the listed price, estimated market value, profit spread, and a direct link to the listing. The math is already done. You decide if it's worth pulling the trigger.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">💰</div>
+      <h3>You Buy It and Flip It</h3>
+      <p>Move on the deal, clean it up if needed, relist at market price, and collect the spread. Flip IQ finds the next one while you're selling the first.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="section-tag">What You Get</div>
+  <h2 class="section-title">Three Categories.<br>One Daily Report.</h2>
+  <div class="category-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="category-card">
+      <div class="cat-header">
+        <div class="cat-icon">🚗</div>
+        <h3>Car Deals</h3>
+        <span class="cat-badge">$500+ Below Market</span>
+      </div>
+      <p>Daily scan of Craigslist and used car listings in your area. Compared against KBB private party value, CarGurus, and eBay Motors sold data. Only shows vehicles priced at least $500 below market value.</p>
+    </div>
+    <div class="category-card">
+      <div class="cat-header">
+        <div class="cat-icon">👟</div>
+        <h3>Sneaker Deals</h3>
+        <span class="cat-badge">Net Profit Calculated</span>
+      </div>
+      <p>Scans eBay buy-it-now listings for Jordan 1s, Nike Dunks, Yeezys, New Balance 550, and Air Force 1s. Cross-checked against StockX and GOAT. Net profit after all fees calculated for every deal.</p>
+    </div>
+    <div class="category-card">
+      <div class="cat-header">
+        <div class="cat-icon">🃏</div>
+        <h3>Trading Card Deals</h3>
+        <span class="cat-badge">50%+ Margin Min.</span>
+      </div>
+      <p>Sports cards, Pokémon, and collectibles scanned for underpriced listings vs. recent sold comparables. Minimum $50 profit and 50% margin. PSA graded cards, rookies, and vintage included.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-tag">Pricing</div>
+  <h2 class="section-title">Pick Your Edge</h2>
+  <div class="pricing-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 780px; margin-left: auto; margin-right: auto;">
+    <div class="plan">
+      <div class="plan-name">Free</div>
+      <div class="plan-price"><span>$</span>0<sub>/mo</sub></div>
+      <div class="plan-sub">Cars Only — Mon, Wed & Fri</div>
+      <ul class="plan-features">
+        <li>Car deal alerts 3x per week</li>
+        <li>KBB comparison included</li>
+        <li>Direct listing links</li>
+        <li>No credit card required</li>
+      </ul>
+      <a href="https://forms.gle/VYZYKNhTktoC9G747" class="plan-btn">Get Started Free</a>
+    </div>
+    <div class="plan featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="plan-name">Hustler</div>
+      <div class="plan-price"><span>$</span>49<sub>/mo</sub></div>
+      <div class="plan-sub">All 3 Categories — Every Morning</div>
+      <ul class="plan-features">
+        <li>Daily cars, sneakers & trading cards</li>
+        <li>Net profit & ROI calculated</li>
+        <li>Delivered every morning at 7AM</li>
+        <li>Cancel anytime, no contracts</li>
+      </ul>
+      <a href="https://forms.gle/VYZYKNhTktoC9G747" class="plan-btn">Start Hustling</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-tag">FAQ</div>
+  <h2 class="section-title">Common Questions</h2>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <h4>Do I need any experience to use Flip IQ?</h4>
+      <p>No. If you can read a simple report and click a link, you're qualified. We do the research — you make the call.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How is Flip IQ different from searching myself?</h4>
+      <p>We search smarter and faster. We cross-reference multiple price sources, calculate profit after fees, and deliver only the best opportunities every morning.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What markets do you currently cover?</h4>
+      <p>Currently serving Nashville, TN. Expanding to more cities soon.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Are deals guaranteed to be profitable?</h4>
+      <p>No — we provide data, not promises. We surface the best opportunities every morning. Always verify before you buy.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I cancel anytime?</h4>
+      <p>Yes. No contracts, no tricks. Cancel from your account at any time with no questions asked.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How do I receive the daily reports?</h4>
+      <p>Reports are delivered directly to your phone — no app needed, no logging in. Just a clean, actionable report every morning at 7AM.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-tag">Get Started Today</div>
+  <h2 class="section-title">Ready to Find<br>Your Next Flip?</h2>
+  <p>The deal you've been waiting for is probably already listed somewhere right now. Flip IQ is already scanning for it.</p>
+  <a href="https://forms.gle/VYZYKNhTktoC9G747" class="btn-primary" style="font-size:1rem; padding: 1.1rem 2.8rem;">Start Finding Deals — It's Free →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Flip IQ</div>
+  <p>© 2025 Flip IQ. Currently serving Nashville, TN.</p>
+  <p style="font-size:0.7rem; color: var(--muted);">Results may vary. Always verify deals before purchasing.</p>
+</footer>
+
+</body>
+</html>
